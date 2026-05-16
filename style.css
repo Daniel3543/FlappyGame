@@ -1,0 +1,249 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+.game{
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: url(images/bg.webp) 0 100% / cover;
+    /* animation: bg 7s linear infinite; */
+    --bg:0;
+}
+.game::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, var(--bg));
+    transition: 4s;
+}
+.game .floor{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(images/bg.webp) 0 100% / cover;
+    
+    /* animation: bg 5s linear infinite; */
+}
+@keyframes bg {
+    to {background-position-x: -100vw;}
+}
+
+.game .bird, .game .enemyBird{
+    position: absolute;
+    top: 80px;
+    left: 150px;
+    width: 77px;
+    height: 51px;
+    background: url(images/bird.gif) no-repeat -6px -10px / 90px 72px;
+    border-radius: 30px 30px 11px 20px;
+    transition: .1s;
+    /* border: 1px solid #000; */
+}
+.game .enemyBird{
+    left: auto;
+    right: -500px;
+    scale: -1 1;
+    filter: invert(1) hue-rotate(240deg);
+    /* animation: pipe 4s linear infinite; */
+    transition: 6s;
+}
+.game h3{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    translate: -50% -80%;
+    text-transform: capitalize;
+    font: bold 7rem cursive;
+    text-shadow: -5px -4px 3px #fff, -5px 9px 6px #000;
+    white-space: nowrap;
+    transition: .8s;
+    opacity: 0;
+}
+.game .pipe{
+    position: absolute;
+    right: -150px;
+    width: 135px;
+    height: 25%;
+    background: url(images/pipe.png) no-repeat 0px 0px /135px 100%;
+    animation: 6s linear infinite;
+}
+.game .pipe.top{
+    top: 0;
+    scale: 1 -1;
+}
+.game .pipe.bottom{
+    bottom: 97px;
+}
+
+@keyframes pipe {
+    to{right: 100%;}
+}
+
+/* .game .pipe.press{
+    animation: pipe 6s linear 2s infinite, press 4s infinite;
+} */
+@keyframes press {
+    35%{height: 25%;}
+    48%,58% {height: calc(50% - 48.5px);}
+    65%{height: 25%;}
+}
+.game .pipe.three {
+    animation-delay: 4s;
+}
+.game .display{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+.game .display h2{
+    text-shadow: -3px 2px 3px #fff, -3px 8px 6px #000;
+    font: bold 26px cursive;
+    text-transform: capitalize;
+}
+
+.menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(images/menu.jpg) center bottom / 30% 100%;
+    animation: menu 2.5s infinite;
+    z-index: 1;
+    transition: .5s;
+}
+@keyframes menu {
+    50%{
+        background-size: 60% 200%;
+        background-position: center 80%;
+    }
+}
+.menu .menuPipe{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 270px;
+    height: 390px;
+    background: url(images/pipe.png) no-repeat center / contain;
+    text-align: center;
+}
+.menu .menuPipe .play{
+    background: url(images/pipe.png) no-repeat center top / cover;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font: bold 2.8rem arial;
+    text-transform: uppercase;
+    transition: .4s;
+    margin-bottom: 7rem;
+}
+.menu .menuPipe .play:hover{
+    background-position-y: -100px;
+}
+.menu .menuPipe .play:active{
+    background-position-y: 100px;
+}
+.menu .menuPipe :is(h5, h6){
+    font: bold 15px cursive;
+    text-transform: capitalize;
+}
+.menu h1{
+    text-align: center;
+    margin-top: 5%;
+    font: bold 8vw arial;
+    background: linear-gradient(#0f0 50%, #fa0 50%) no-repeat 50% -120px;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke: 3px #fff;
+    animation: gameName 1.3s infinite;
+     overflow: hidden;
+}
+@keyframes gameName {
+    40%{background-position-y: 0;}
+    50%{scale: 1.3;}
+    60%{background-position-y: 0;}
+    100%{background-position-y: 240px;}
+}
+.menu :is(.birdMenu, .enemyBirdMenu){
+    height: 200px;
+    position: absolute;
+    top: 30%;
+    transform: translateX(calc(-50% - var(--c))) scale(var(--p));
+    animation: goBird 2s forwards;
+}
+.menu .birdMenu{
+    --c:270px;
+    --p:1;
+    left: -50%;
+}
+.menu .enemyBirdMenu{
+    --c:-270px;
+    --p:-1,1;
+    left: 150%;
+    filter: invert(1) hue-rotate(240deg);
+}
+@keyframes goBird{
+    to{left:50%;}
+}
+.menu h3{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30%;
+    z-index: 0;
+    letter-spacing: -30px;
+    color: #fff;
+    font: bold 55px cursive;
+    text-shadow: 0 3px 2px #000;
+    text-align: center;
+    animation: names 2s forwards;
+}
+.menu h3:nth-child(2){
+    animation-delay:2s;
+}
+.menu h3:nth-child(3){
+    animation-delay:4s;
+}
+.menu h3:nth-child(4){
+    animation-delay:6s;
+}
+.menu h3:nth-child(5){
+    animation-delay:8s;
+}
+.menu h3:nth-child(6){
+    animation-delay:10s;
+}
+.menu h3:nth-child(7){
+    animation-delay:12s;
+}
+@keyframes names {
+    20%{
+        bottom: 85%;
+        letter-spacing: 0;
+    }
+    40%{
+        bottom: 65%;
+    }
+    60%{
+        opacity: 1;
+        scale: 2;
+        color: gold;
+        z-index: 2;
+        -webkit-text-stroke: 2px #f00;
+    }
+    100%{
+        opacity: 0;
+        letter-spacing: 0;
+        bottom: 85%;
+    }
+}
